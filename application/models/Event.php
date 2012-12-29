@@ -39,7 +39,7 @@ class Model_Event extends Zend_Db_Table_Abstract
 	    $select = $this->select()
     	    ->from($this->_name)
     	    ->setIntegrityCheck(false)
-    	    ->joinLeft('eventtype', 'event.eventTypeID = eventtype.eventTypeID', array('eventText'))
+    	    ->joinLeft('eventtype', 'event.eventTypeID = eventtype.eventTypeID', array('eventText', 'eventKey'))
     	    ->joinLeft('auth', 'event.userID = auth.id', array('real_name'))
     	    ->where("eventtype.eventKey = 'disarmed' or eventtype.eventKey = 'armed'")
     	    ->order(array('event.eventTimestamp DESC', 'eventID DESC'))

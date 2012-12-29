@@ -35,7 +35,42 @@ class IndexController extends Zend_Controller_Action
     
     public function armAction()
     {
+        $eventTable = new Model_Event();
+        $alarmState = $eventTable->getArmedState();
+        $this->view->alarmState = $alarmState;
         
+        $acl = Zend_Registry::get('acl');
+        $allowdToArm = $acl->isAllowed($this->ident->role, null, 'arm');
+        $allowdToDisarm = $acl->isAllowed($this->ident->role, null, 'disarm');
+        
+        $this->view->allowdToArm = $allowdToArm;
+        $this->view->allowdToDisarm = $allowdToDisarm;
+        
+        $submitLabel = 'disarm';
+        if ($alarmState->eventKey == 'disarmed') {
+            $submitLabel = 'arm';
+        }
+        $form = new Form_Armdisarm(array('submitLablel' => $submitLabel));
+        
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())
+                    && $acl->isAllowed($this->ident->role, null, $submitLabel)) {
+                $eventTypeTable = new Model_Eventtype();
+                $newState = $alarmState->eventKey == 'disarmed' ? 'armed' : 'disarmed';
+                $eventType = $eventTypeTable->getEventTypeByEventKey($newState);
+                
+                $data = array(
+                        'userID'      => $this->ident->id,
+                        'eventTypeID' => $eventType->eventTypeID,
+                        'eventNote'   => $form->getValue('reason')
+                );
+                $eventTable->insert($data);
+                $this->_helper->redirector('index', 'index');
+            }
+        }
+        
+        
+        $this->view->form = $form;
     }
 }
 
