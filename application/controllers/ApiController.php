@@ -29,15 +29,20 @@ class ApiController extends Zend_Controller_Action
 		$table = new Model_Event();
 		$table->insert($data);
 		if ($eventType == 1) {
-			$eventTypeTable = new Model_Eventtype();
-			$event = $eventTypeTable->fetchAll(array('eventTypeID  = ?' => $eventType))->current();
-			
-			$mail = new Zend_Mail();
-			$mail->setBodyText($doorRowset->current()->doorName . ' - ' . $event->eventText);
-			$mail->setFrom('alarm@alarm.lart2150.com', 'Alarm System');
-			$mail->addTo('alarm@lart2150.com', 'Alarm');
-			$mail->setSubject('Alarm Event - ' . $doorRowset->current()->doorName);
-			$mail->send();
+		    $eventTable = new Model_Event();
+		    $alarmState = $eventTable->getArmedState();
+		    if ($alarmState->eventKey != 'disarmed')
+		    {
+    			$eventTypeTable = new Model_Eventtype();
+    			$event = $eventTypeTable->fetchAll(array('eventTypeID  = ?' => $eventType))->current();
+    			
+    			$mail = new Zend_Mail();
+    			$mail->setBodyText($doorRowset->current()->doorName . ' - ' . $event->eventText);
+    			$mail->setFrom('alarm@alarm.lart2150.com', 'Alarm System');
+    			$mail->addTo('alarm@lart2150.com', 'Alarm');
+    			$mail->setSubject('Alarm Event - ' . $doorRowset->current()->doorName);
+    			$mail->send();
+		    }
 		}
 		echo json_encode($data);
     }
