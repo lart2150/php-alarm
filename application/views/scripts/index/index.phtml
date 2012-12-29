@@ -1,0 +1,32 @@
+      <h1>Alarm Events</h1>
+<?php
+echo '<div class="span4">';
+echo '<h2>System</h2>';
+$lastEvent = '';
+echo '<ul>';
+foreach($this->systemEvents as $event) {
+    if ($lastEvent != $event->eventText) {
+        $eventTime = new DateTime($event->eventTimestamp);
+        echo '<li class="event'.$event->eventTypeID.'">', $event->eventText , ' by ', $event->real_name,' - ' , $eventTime->format('m/d/Y g:i:s A') , '</li>';
+        $lastEvent = $event->eventText;
+    }
+}
+echo '</ul>';
+echo '</div>';
+
+foreach($this->events as $doorEvents) {
+	echo '<div class="span4">';
+	echo '<h2>' , $doorEvents->current()->doorName , '</h2>';
+	$lastEvent = '';
+	echo '<ul>';
+	foreach($doorEvents as $event) {
+		if ($lastEvent != $event->eventText) {
+			$eventTime = new DateTime($event->eventTimestamp);
+			echo '<li class="event'.$event->eventTypeID.'">', $event->eventText , ' - ' , $eventTime->format('m/d/Y g:i:s A') , '</li>';
+			$lastEvent = $event->eventText;
+		}
+	}
+	echo '</ul>';
+	echo '</div>';
+}
+?>
