@@ -55,5 +55,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'MD5(?) AND active = 1');
         Zend_Registry::set('auth', $adapter);
     }
+    protected function _initLayoutAuth()
+    {
+        $this->ident = Zend_Auth::getInstance()->getIdentity();
+        Zend_Layout::startMvc();
+        $layout = Zend_Layout::getMvcInstance();
+        $view = $layout->getView();
+        
+        if ($this->ident) {
+            $view->loggedin = true;
+        } else {
+            $view->loggedin = false;
+        }
+        
+            
+    }
 }
 

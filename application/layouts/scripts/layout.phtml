@@ -44,8 +44,12 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="<?php echo $this->page == 'home' ? 'active' : ''; ?>"><a href="/">Home</a></li>
+              <?php if (!$this->loggedin) {?>
               <li class="<?php echo $this->page == 'login' ? 'active' : ''; ?>"><a href="/auth">Login</a></li>
+              <?php } else {?>
+              <li class="<?php echo $this->page == 'arm' ? 'active' : ''; ?>"><a href="/index/arm">Arm/Disarm</a></li>
               <li><a href="/auth/logout">logout</a></li>
+              <?php } ?>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

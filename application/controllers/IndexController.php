@@ -35,6 +35,7 @@ class IndexController extends Zend_Controller_Action
     
     public function armAction()
     {
+        $this->layoutView->page = 'arm';
         $eventTable = new Model_Event();
         $alarmState = $eventTable->getArmedState();
         $this->view->alarmState = $alarmState;
@@ -45,6 +46,11 @@ class IndexController extends Zend_Controller_Action
         
         $this->view->allowdToArm = $allowdToArm;
         $this->view->allowdToDisarm = $allowdToDisarm;
+        
+        if (!$this->view->allowdToArm && !$this->view->allowdToDisarm)
+        {
+            $this->_helper->redirector('index', 'index');
+        }
         
         $submitLabel = 'disarm';
         if ($alarmState->eventKey == 'disarmed') {
