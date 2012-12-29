@@ -29,6 +29,13 @@ class IndexController extends Zend_Controller_Action
         //$door = $event->findParentRow('Model_Doors');
         $this->view->events = $events;
         $this->view->systemEvents = $systemEvents;
+        $this->view->alarmState = $eventTable->getArmedState();
+        
+    }
+    
+    public function armAction()
+    {
+        
     }
 }
 

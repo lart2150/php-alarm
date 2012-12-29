@@ -34,4 +34,17 @@ class Model_Event extends Zend_Db_Table_Abstract
 		
 		return $this->fetchAll($select);
 	}
+	
+	public function getArmedState() {
+	    $select = $this->select()
+    	    ->from($this->_name)
+    	    ->setIntegrityCheck(false)
+    	    ->joinLeft('eventtype', 'event.eventTypeID = eventtype.eventTypeID', array('eventText'))
+    	    ->joinLeft('auth', 'event.userID = auth.id', array('real_name'))
+    	    ->where("eventtype.eventKey = 'disarmed' or eventtype.eventKey = 'armed'")
+    	    ->order(array('event.eventTimestamp DESC', 'eventID DESC'))
+    	    ->limit(1);
+	    
+	    return $this->fetchAll($select)->current();
+	}
 }
