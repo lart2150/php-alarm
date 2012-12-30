@@ -1,3 +1,45 @@
 Current system state is <?php echo $this->alarmState->eventKey ?>
+<?php $this->form->setAction($this->url()); ?>
 
-<?php echo $this->form->setAction($this->url()); ?>
+<form id="alarmForm"  action="<?php echo $this->form->getAction(); ?>" method="POST">
+<dl class="zend_form">
+<dt>
+<?php echo $this->form->reason->getLabel(); ?>
+</dt>
+<dd>
+            <div class="input-append">
+    <?php echo $this->{$this->form->reason->helper}(
+        $this->form->reason->getName(),
+        $this->form->reason->getValue(),
+        $this->form->reason->getAttribs()
+    ) ?>
+              <div class="btn-group">
+                <button data-toggle="dropdown" class="btn dropdown-toggle">Reason presets <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="javascript:setReason('Left House')"><i class="icon-road"></i> Left House</a></li>
+                  <li><a href="javascript:setReason('Returning Home')"><i class="icon-home"></i> Returning Home</a></li>
+                  <li class="divider"></li>
+                  <li><a href="javascript:setReason('Forgot Alarm')"><i class="icon-time"></i> Forgot Alarm</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+</dd>
+<?php 
+$elements = $this->form->getElements();
+foreach($elements as $element) {
+    if ($element->getType() == 'Zend_Form_Element_Submit'){
+        $submit = $element; 
+        break;
+    }
+}
+?>
+<?php echo $submit; ?>
+</dl>
+</form>
+
+<script>
+function setReason(reason) {
+    $('#reason').val(reason);
+    $('#alarmForm').submit();
+}
+
+</script>

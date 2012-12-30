@@ -26,6 +26,7 @@ class Form_Login extends Zend_Form
                         'label' => 'Username:'
                 )
                 );
+        $this->getElement('username')->setAttribs(array('placeholder' => 'Username'));
         
         $this->addElement('password', 'password', 
                 array(
@@ -43,6 +44,7 @@ class Form_Login extends Zend_Form
                         'label' => 'Password:'
                 )
                 );
+        $this->getElement('password')->setAttribs(array('placeholder' => 'Password'));
         
         $this->addElement('submit', 'login', 
                 array(
@@ -51,5 +53,7 @@ class Form_Login extends Zend_Form
                         'label' => 'Login'
                 )
                 );
+        $this->getElement('login')->class = 'btn btn-primary';
+        
     }
 }

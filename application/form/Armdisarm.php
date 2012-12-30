@@ -34,5 +34,8 @@ class Form_Armdisarm extends Zend_Form
                         'label' => $this->getAttrib('submitLablel')
                 )
         );
+        
+        $this->getElement($this->getAttrib('submitLablel'))->class = 'btn btn-primary';
+        
     }
 }

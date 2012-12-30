@@ -8,7 +8,7 @@ echo '<ul>';
 foreach($this->systemEvents as $event) {
     if ($lastEvent != $event->eventText) {
         $eventTime = new DateTime($event->eventTimestamp);
-        echo '<li class="event'.$event->eventTypeID.'">', $event->eventText , ' by ', $event->real_name,' - ' , $eventTime->format('m/d/Y g:i:s A') , '</li>';
+        echo '<li class="event'.$event->eventTypeID.'">', $event->eventText , '&nbsp;by&nbsp;', $event->real_name,' - ' , str_replace(' ', '&nbsp;', $eventTime->format('m/d/Y g:i:s A')) , '</li>';
         $lastEvent = $event->eventText;
     }
 }
@@ -23,7 +23,7 @@ foreach($this->events as $doorEvents) {
 	foreach($doorEvents as $event) {
 		if ($lastEvent != $event->eventText) {
 			$eventTime = new DateTime($event->eventTimestamp);
-			echo '<li class="event'.$event->eventTypeID.'">', $event->eventText , ' - ' , $eventTime->format('m/d/Y g:i:s A') , '</li>';
+			echo '<li class="event'.$event->eventTypeID.'">', $event->eventText , ' - ' , str_replace(' ', '&nbsp;', $eventTime->format('m/d/Y g:i:s A')) , '</li>';
 			$lastEvent = $event->eventText;
 		}
 	}
