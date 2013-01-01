@@ -56,5 +56,24 @@ class ApiController extends Zend_Controller_Action
 		}
 		echo json_encode($data);
     }
+    
+    public function uploadVideoAction() {
+        $apikey = $this->_request->getParam('apikey');
+        if ($apikey != $this->getInvokeArg('bootstrap')->getOption('apikey')) {
+            echo json_encode(array('error' => 'Bad key'));
+            return;
+        }
+        $eventid = (int) $this->_request->getParam('eventid');
+        /*echo '<html>
+<body>
+<form method="post" enctype="multipart/form-data">
+<input type="file" name="file" id="file"><br>
+<input type="submit" name="submit" value="Submit">
+</form>
+</body>
+</html>';*/
+        var_dump($_FILES);
+        move_uploaded_file($_FILES['file']['tmp_name'], APPLICATION_PATH . '/../uploads/' . $eventid . '.webm');
+    }
 }
 
