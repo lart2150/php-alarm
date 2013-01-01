@@ -23,12 +23,21 @@ class ApiController extends Zend_Controller_Action
 		$doorID = $doorRowset->current()->doorID;
 		$eventType = (int) $this->_request->getParam('eventType');
 
+		
+		$apikey = $this->_request->getParam('apikey');
+		if ($apikey != $this->getInvokeArg('bootstrap')->getOption('apikey')) {
+		    echo json_encode(array('error' => 'Bad key'));
+		    return;
+		}
+		
 		$data = array(
 			'doorID'      => $doorID,
 			'eventTypeID' => $eventType,
 		);
 		$table = new Model_Event();
-		$table->insert($data);
+		$eventid = (int) $table->insert($data);
+		$data['eventID'] = $eventid;
+		
 		if ($eventType == 1) {
 		    $eventTable = new Model_Event();
 		    $alarmState = $eventTable->getArmedState();
