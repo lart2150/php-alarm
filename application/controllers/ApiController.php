@@ -72,8 +72,15 @@ class ApiController extends Zend_Controller_Action
 </form>
 </body>
 </html>';*/
-        var_dump($_FILES);
-        move_uploaded_file($_FILES['file']['tmp_name'], APPLICATION_PATH . '/../uploads/' . $eventid . '.webm');
+        if (isset($_FILES['file'])) {
+            if (move_uploaded_file($_FILES['file']['tmp_name'], APPLICATION_PATH . '/../uploads/' . $eventid . '.webm'))
+                echo json_encode(array('message' => 'File uploaded!'));
+            else
+                echo json_encode(array('error' => 'internal error'));
+        } else {
+            echo json_encode(array('error' => 'no upload'));
+        }
+        
     }
 }
 
