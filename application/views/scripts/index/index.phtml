@@ -24,6 +24,12 @@ foreach($this->events as $doorEvents) {
 		if ($lastEvent != $event->eventText) {
 			$eventTime = new DateTime($event->eventTimestamp);
 			echo '<li class="event'.$event->eventTypeID.'">', $event->eventText , ' - ' , str_replace(' ', '&nbsp;', $eventTime->format('m/d/Y g:i:s A')) , '</li>';
+			if ($this->eventTable->hasVideo($event->eventID)) {
+			    echo '<video width="280" controls>';
+			    echo '   <source src="/video/index/eventid/'.$event->eventID.'" type="video/webm">';
+			    echo '</video>';
+			}
+			
 			$lastEvent = $event->eventText;
 		}
 	}

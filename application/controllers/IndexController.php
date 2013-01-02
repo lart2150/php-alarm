@@ -30,7 +30,7 @@ class IndexController extends Zend_Controller_Action
         $this->view->events = $events;
         $this->view->systemEvents = $systemEvents;
         $this->view->alarmState = $eventTable->getArmedState();
-        
+        $this->view->eventTable = $eventTable;
     }
     
     public function armAction()

@@ -47,4 +47,8 @@ class Model_Event extends Zend_Db_Table_Abstract
 	    
 	    return $this->fetchAll($select)->current();
 	}
+	
+	public function hasVideo($eventid) {
+	    return file_exists(APPLICATION_PATH . '/../uploads/' . $eventid . '.webm');
+	}
 }
