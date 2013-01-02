@@ -34,13 +34,13 @@ class ApiController extends Zend_Controller_Action
 			'doorID'      => $doorID,
 			'eventTypeID' => $eventType,
 		);
-		$table = new Model_Event();
-		$eventid = (int) $table->insert($data);
+		$eventTable = new Model_Event();
+		$eventid = (int) $eventTable->insert($data);
+		$alarmState = $eventTable->getArmedState();
 		$data['eventID'] = $eventid;
-		
+		$data['armedStatus'] = $alarmState->eventKey;
 		if ($eventType == 1) {
-		    $eventTable = new Model_Event();
-		    $alarmState = $eventTable->getArmedState();
+		    
 		    if ($alarmState->eventKey != 'disarmed')
 		    {
     			$eventTypeTable = new Model_Eventtype();
