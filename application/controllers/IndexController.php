@@ -21,9 +21,7 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
         $eventTable = new Model_Event();
-        $events[0] = $eventTable->getEvents(4);
-        $events[1] = $eventTable->getEvents(1);
-        $events[2] = $eventTable->getEvents(2);
+        $events = $eventTable->getEvents(array(4, 2, 1));
         $systemEvents = $eventTable->getEvents(null);
 
         //$door = $event->findParentRow('Model_Doors');

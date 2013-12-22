@@ -25,13 +25,14 @@ class Model_Event extends Zend_Db_Table_Abstract
 			->joinLeft('eventtype', 'event.eventTypeID = eventtype.eventTypeID', array('eventText'))
 			->joinLeft('auth', 'event.userID = auth.id', array('real_name'))
 			->order(array('event.eventTimestamp DESC', 'eventID DESC'))
-			->limit(6);
+			->limit(16);
 		if ($doorid=== null) {
 		    $select->where('event.doorID IS NULL');
+		} elseif (is_array($doorid)) {
+		    $select->where('event.doorID in (?)', $doorid);
 		} else {
 		    $select->where('event.doorID = ?', $doorid);
 		}
-		
 		return $this->fetchAll($select);
 	}
 	

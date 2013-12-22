@@ -39,7 +39,7 @@ class ApiController extends Zend_Controller_Action
 		$alarmState = $eventTable->getArmedState();
 		$data['eventID'] = $eventid;
 		$data['armedStatus'] = $alarmState->eventKey;
-		if ($eventType == 1) {
+		if ($eventType == 0) {
 		    
 		    if ($alarmState->eventKey != 'disarmed')
 		    {
