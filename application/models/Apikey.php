@@ -8,11 +8,12 @@ class Model_Apikey extends Zend_Db_Table_Abstract
     	$uuid = uniqid('', true);
     	$expieres = new DateTime("+1 month");
     	
-    	$this->insert(array(
+    	$data = array(
     			 "apikey" => $uuid,
-    			 "authid" => $authid,
-    			 "expires" => $expieres
-    			));
+    			 "username" => $authid,
+    			 "expires" => $expieres->format('Y-m-d H:i:s'),
+    			);
+        $this->insert($data);
     	return $uuid;
     }
 }
