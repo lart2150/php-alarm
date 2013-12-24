@@ -82,5 +82,26 @@ class ApiController extends Zend_Controller_Action
         }
         
     }
+    public function authAction() {
+    	$username = $this->_request->getParam('username');
+    	$password = $this->_request->getParam('password');
+    	
+    	$adapter = Zend_Registry::get('auth');
+    	$adapter->setIdentity($username);
+    	$adapter->setCredential($password);
+    	
+    	$auth = Zend_Auth::getInstance();
+    	$result = $auth->authenticate($adapter);
+    	if ($result->isValid()) {
+    		$user = $adapter->getResultRowObject();
+    		$apikeyTable = new Model_Apikey();
+    		$uuid = $apikeyTable->createKey($user->id);
+    		echo json_encode($uuid);
+    		return true;
+    	}
+    	
+    	echo json_encode(false);
+    	return false;
+    }
 }
 
