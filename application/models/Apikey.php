@@ -18,7 +18,7 @@ class Model_Apikey extends Zend_Db_Table_Abstract
     }
     
     public function getKey($apikey) {
-    	$this->select()
+    	$select = $this->select()
     		->where('apikey = ?', $apikey)
     		->where('expires > now()');
     	return $this->fetchAll($select)->current();
