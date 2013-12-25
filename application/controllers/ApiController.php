@@ -118,7 +118,7 @@ class ApiController extends Zend_Controller_Action
     	$key = $this->_request->getParam('key');
     	$count = (int) $this->_request->getParam('count');
     	$skip = (int) $this->_request->getParam('skip');
-    	
+    	$apikeyTable = new Model_Apikey();
     	$result = $apikeyTable->getKey($key);
     	if (!$result) {
     		echo json_encode(false);
@@ -126,7 +126,7 @@ class ApiController extends Zend_Controller_Action
     	} 
     	
     	$eventTable = new Model_Event();
-    	$events = $eventTable->getEvents(array(4, 2, 1));
+    	$events = $eventTable->getEvents(array(4, 2, 1), $count, $skip);
     	echo json_encode($events->toArray());
     	
     }
