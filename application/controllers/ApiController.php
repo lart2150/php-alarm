@@ -114,7 +114,7 @@ class ApiController extends Zend_Controller_Action
     	return;
     }
     
-    public function getEvents() {
+    public function getEventsAction() {
     	$key = $this->_request->getParam('key');
     	$count = (int) $this->_request->getParam('count');
     	$skip = (int) $this->_request->getParam('skip');
