@@ -103,5 +103,32 @@ class ApiController extends Zend_Controller_Action
     	echo json_encode(false);
     	return false;
     }
+    
+    public function checkApiAction() {
+    	$key = $this->_request->getParam('key');
+    	$apikeyTable = new Model_Apikey();
+    	$result = $apikeyTable->getKey($key);
+    	if ($result) {
+    		echo json_encode($result->expires);
+    	}
+    	return;
+    }
+    
+    public function getEvents() {
+    	$key = $this->_request->getParam('key');
+    	$count = (int) $this->_request->getParam('count');
+    	$skip = (int) $this->_request->getParam('skip');
+    	
+    	$result = $apikeyTable->getKey($key);
+    	if (!$result) {
+    		echo json_encode(false);
+    		return false;
+    	} 
+    	
+    	$eventTable = new Model_Event();
+    	$events = $eventTable->getEvents(array(4, 2, 1));
+    	echo json_encode($events->toArray());
+    	
+    }
 }
 

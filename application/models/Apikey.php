@@ -16,4 +16,11 @@ class Model_Apikey extends Zend_Db_Table_Abstract
         $this->insert($data);
     	return $uuid;
     }
+    
+    public function getKey($apikey) {
+    	$this->select()
+    		->where('apikey = ?', $apikey)
+    		->where('expires > now()');
+    	return $this->fetchAll($select)->current();
+    }
 }

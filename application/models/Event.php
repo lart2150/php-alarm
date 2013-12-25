@@ -16,7 +16,7 @@ class Model_Event extends Zend_Db_Table_Abstract
         )
     );
 
-	public function getEvents($doorid) {
+	public function getEvents($doorid, $count = 16, $offset = 0) {
 
 		$select = $this->select()
 			->from($this->_name)
@@ -25,7 +25,7 @@ class Model_Event extends Zend_Db_Table_Abstract
 			->joinLeft('eventtype', 'event.eventTypeID = eventtype.eventTypeID', array('eventText'))
 			->joinLeft('auth', 'event.userID = auth.id', array('real_name'))
 			->order(array('event.eventTimestamp DESC', 'eventID DESC'))
-			->limit(16);
+			->limit($count, $offset);
 		if ($doorid=== null) {
 		    $select->where('event.doorID IS NULL');
 		} elseif (is_array($doorid)) {
